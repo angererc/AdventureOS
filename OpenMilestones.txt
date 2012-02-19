@@ -1,0 +1,72 @@
+This file contains a list of subsystems that should/can be implemented in the given order, hopefully one day resulting in a working engine for adventure games.
+
+##########################################
+Main game loop. 
+
+Subsystem name: game
+
+Demo: instantiate game object, start loop, configured with frame rate
+
+##########################################
+Aspect system 
+
+Subsystem name: aspects
+
+Demo: create items, attach some aspects, switch aspects
+
+##########################################
+Fixed-point Aspect synchronization system 
+
+Subsystem name: aspects
+
+Demo: items with aspects, observing each other's values; update of aspect A property triggers updates of B, which triggers C; synchronization runs until fixed point reached but at most once (twice?) for every aspect involved to avoid infinite loops
+
+##########################################
+Scripting System 
+
+Subsystem name: scripting
+
+Demo: Runnable script that can be interrupted and resumed at every step, including inside loops, if we support loops. It would be cool if the scripts are JavaScript but I don't see how we can interrupt and resume them then, at least without some sort of pre-compiler
+
+##########################################
+Tick distributor and messaging system 
+
+Subsystem name: messaging
+
+Demo: game loop with registering/deregistering objects for receiving ticks, being able to queue messages where sending is delayed for n messages
+
+##########################################
+Sprite system; maybe existing library like raphael, lime-js 
+
+Subsystem name: drawing
+
+Demo: HTML5 canvasses with animation, zooming, scaling, clipping masks, etc.
+
+##########################################
+Physics engine or at least an "animation engine" including collision checks 
+
+Subsystem name: physics
+
+Demo: set X coordinate of item Foo, Foo starts moving to that location; if physics engine: other items may be affected by that, e.g., bouncing off
+
+##########################################
+path finding algorithm (maybe even more AI-related things; e.g., give an item some sort of objective (meander around, carefully follow the hero, ...) and the item does that, withoug you specifying every detail)
+
+Subsystem name: ai
+
+Demo: find a path in a maze
+
+##########################################
+.ae files including puzzles and what not; .ae files should probably be either json files or even JavaScript files, if necessary. Own compiler and syntax only if there's a really good reason.
+
+Subsystem name: authoring
+
+Demo: .ae file, gets loaded, sets up items
+
+##########################################
+"data base" with saving and loading (serialization) and possibly "elastic synchronization" for multi-player games.
+
+Subsystem name: datasource
+
+##########################################
+Top 5 Aspect implementations; essentially, tie together all of the above stand-alone systems: position aspect, sprite aspect, etc. Maybe we add the "item that does XYZ" to the above subproject demos, then this point goes away. Point 9 is then only a "demo game"

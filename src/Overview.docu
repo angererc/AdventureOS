@@ -9,8 +9,16 @@ It is written using asciidoc markup and can be compiled with the command:
 *********************************************************************
 
 
-util
-----
+=== Package util
 
-Util contains helpful JavaScript code snippets. Mostly the "namespace" function that imitates namespaces in javascript.
+Util contains helpful JavaScript code snippets.
 
+=== Class aos.Game
+
+The Game module contains the main Game object. A Game object is pretty much only a primitive service registry
+(that is, a hash map). A single game object plays the function of a "global" object for a game instance. Other services should get a reference to the game and can start from there to discover other services.
+
+Protocol between game and a service (all optional):
+  - hasBeenAddedToGameWithName(game, name)
+  - willBeRemovedFromGame()
+  - hasBeenRemovedFromGame()

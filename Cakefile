@@ -19,6 +19,7 @@ appFiles  = [
   'util/LanguageExtensions'
   'Game'
   'TimeService'
+  'TimedCallbackDispatcher'
 ]
 
 # ---------------------------------------------

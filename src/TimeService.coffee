@@ -1,5 +1,5 @@
 module 'aos'
-
+			
 class aos.TimeService
 	
 	constructor: () ->

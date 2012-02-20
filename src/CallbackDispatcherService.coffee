@@ -4,7 +4,7 @@ module 'aos'
 #this class can be registered  (directly or indirectly) as a tick receiver
 #and then allows you to schedule callbacks either by number of rounds
 #or by elapsed time
-class aos.TimedCallbackDispatcher
+class aos.CallbackDispatcherService
 	
 	constructor: () ->
 		@_byRound = []

@@ -30,3 +30,7 @@ The time service is a service that is supposed to be registered in the game obje
 *********************************************************************
 In future iterations we probably want to make the run loop a little smarter by taking the "target interval" only as a hint. When the last tick took longer, the actual interval for the next tick could be reduced a little to get to the desired frame rate. Not sure if JavaScript's setInterval does something like that already, but I am pretty sure it doesn't
 *********************************************************************
+
+=== Class aos.CallbackDispatcherService
+
+The timed callback dispatcher allows you to register callbacks that are executed later. It implements a dispatch() function that can be used as a tick receiver of the time service. You can register callbacks either by round (e.g., "call in 3 ticks from now") or by time (e.g., "call in 200 ms")

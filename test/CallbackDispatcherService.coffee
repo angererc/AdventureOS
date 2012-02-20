@@ -1,8 +1,8 @@
 t = require './extras/TestHelpers'
 require './build/AdventureOS'
 
-test 'TimedCallbackDispatcher ', ->
-	tcd = new aos.TimedCallbackDispatcher()
+test 'CallbackDispatcherService ', ->
+	tcd = new aos.CallbackDispatcherService()
 	
 	flags = [no, no, no, no]
 	

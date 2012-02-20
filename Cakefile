@@ -18,6 +18,7 @@ appFiles  = [
   # omit src/ and .coffee to make the below lines a little shorter
   'util/LanguageExtensions'
   'Game'
+  'TimeService'
 ]
 
 # ---------------------------------------------
@@ -111,8 +112,8 @@ task 'test', 'run test suite', (options) ->
 	for file in files when file.match /\.coffee$/i
 
 		currentFile = filename = path.join 'test', file
-		console.log "-------------------"
-		console.log "Executing #{currentFile}"
+		log bold, "\n-------------------"
+		log bold, "Executing #{currentFile}"
 		code = fs.readFileSync filename
 		try
 			cs.CoffeeScript.run code.toString(), {filename}

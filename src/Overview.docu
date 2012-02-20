@@ -22,3 +22,11 @@ Protocol between game and a service (all optional):
   - hasBeenAddedToGameWithName(game, name)
   - willBeRemovedFromGame()
   - hasBeenRemovedFromGame()
+
+=== Class aos.TimeService
+
+The time service is a service that is supposed to be registered in the game object. The time service implements a (as of yet primitive) run loop that can be started, paused, resumed, and stopped. You can register tick receivers, which are simple functions that get the passed time since the last tick as their only parameter.
+
+*********************************************************************
+In future iterations we probably want to make the run loop a little smarter by taking the "target interval" only as a hint. When the last tick took longer, the actual interval for the next tick could be reduced a little to get to the desired frame rate. Not sure if JavaScript's setInterval does something like that already, but I am pretty sure it doesn't
+*********************************************************************

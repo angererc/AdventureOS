@@ -9,6 +9,8 @@ class aos.TimeService
 		@_interval = 20
 		this._reset()
 		
+	#register a tick receiver function, a function that takes one parameter: 
+	#the passed time since the last tick
 	pushTickReceiver: (rec) ->
 		throw 'IllegalStateException' unless @_state is 'stopped'
 		@_receivers.push(rec)

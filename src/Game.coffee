@@ -1,4 +1,4 @@
-module 'aos.game'
+module 'aos'
 
 class aos.Game
 	constructor: () ->

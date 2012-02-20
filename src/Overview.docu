@@ -10,7 +10,7 @@ It is written using asciidoc markup and can be compiled with the command:
 
 
 util
-----------
+----
 
 Util contains helpful JavaScript code snippets. Mostly the "namespace" function that imitates namespaces in javascript.
 

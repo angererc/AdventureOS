@@ -22,6 +22,9 @@ arrayEqual
 In addition, we make the CoffeeScript stuff (compiler etc)
 available as
 CoffeeScript.{coffee script function}
+
+and the following helpers:
+printSlots(obj, optional prefixString)
 */
 
 // copy all the assert functions to the test helpers
@@ -61,3 +64,10 @@ exports['arrayEqual'] = function(a, b, msg) {
 
 //making coffee script compiler available to tests
 exports.CoffeeScript = cs.CoffeeScript;
+
+exports.printSlots = function(obj, prefix) {
+	prefix = prefix || "";
+	for (name in obj) {
+		console.log(prefix + name);
+	}
+}

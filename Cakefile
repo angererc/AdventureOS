@@ -20,6 +20,7 @@ appFiles  = [
   'Game'
   'TimeService'
   'CallbackDispatcherService'
+  'EventDispatcherService'
 ]
 
 # ---------------------------------------------

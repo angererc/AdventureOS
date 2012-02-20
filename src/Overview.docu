@@ -34,3 +34,21 @@ In future iterations we probably want to make the run loop a little smarter by t
 === Class aos.CallbackDispatcherService
 
 The timed callback dispatcher allows you to register callbacks that are executed later. It implements a dispatch() function that can be used as a tick receiver of the time service. You can register callbacks either by round (e.g., "call in 3 ticks from now") or by time (e.g., "call in 200 ms")
+
+=== Class EventDispatcherService
+
+The event dispatcher service allows you to register event handler functions for named event/object pairs. If you don't specify an event source object then your handler will be notified for all events with the given name.
+
+When posting an event, you must specify an event name, a source object (optional, then only the 'catch-all' handlers will be triggered) and optional arbitrary data. The handlers will receive an event object of the form {name, source, data}.
+
+Events are dispatched along event chains. So if Button->Container->Window->App forms an event chain and you post an event {name:'foo', source:Button} then the dispatcher will call listeners for 'foo'/Button, 'foo'/Window, 'foo'/Window and 'foo'/App in this order. As the very last action, the catch all listeners for 'foo' are called.
+
+You can build an event chain by doing something like EventDispatcherService.createEventDispatchChainLink(Button, -> Container). The function for the chain link will receive the event object, so you can do more complex stuff than just returning a field. 
+
+*********************************************************************
+Currently, you cannot easily prevent the dispatching along an event chain. You can put this logic into the function for the createEventDispatchChainLink() call, e.g., returning null if the Button received a "click" event and returning the Container otherwise.
+
+This logic is somewhat whacky. It would probably better to do something different in the future, where a callback can somehow consume an event. But that's not trivial, because maybe you want to consume the event for some parent handlers but not for others (e.g., debug output handler on root should always receive the events.)
+
+A nicer option that works today is that you put flags into the event data for "consumable" events. Then, if a handler X should only execute if no previous handler did handle it, then check the data.
+*********************************************************************

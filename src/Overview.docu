@@ -1,0 +1,16 @@
+AdventureOS
+============
+
+*********************************************************************
+This file contains the documentation of a package of the AdventureOS
+It is written using asciidoc markup and can be compiled with the command:
+
+  asciidoc Package.docu
+*********************************************************************
+
+
+util
+----------
+
+Util contains helpful JavaScript code snippets. Mostly the "namespace" function that imitates namespaces in javascript.
+

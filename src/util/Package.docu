@@ -1,0 +1,24 @@
+Util
+========
+
+*********************************************************************
+This file contains the documentation of a package of the AdventureOS
+It is written using asciidoc markup and can be compiled with the command:
+
+  asciidoc Package.docu
+*********************************************************************
+
+namespace
+----------
+
+Usage: 
+
+namespace 'Hello.World', (exports) ->
+  # `exports` is where you attach namespace members
+  exports.hi = -> console.log 'Hi World!'
+
+namespace 'Say.Hello', (exports, top) ->
+  # `top` is a reference to the main namespace
+  exports.fn = -> top.Hello.World.hi()
+
+Say.Hello.fn()  # prints 'Hi World!'

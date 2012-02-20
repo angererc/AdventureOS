@@ -79,6 +79,7 @@ task 'test', 'run test suite', (options) ->
 		try
 			fn.test = {description, currentFile}
 			fn.call(fn)
+			passedTests += 1
 		catch e
 			e.description = description if description?
 			e.source = fn.toString() if fn.toString?
@@ -110,7 +111,8 @@ task 'test', 'run test suite', (options) ->
 	for file in files when file.match /\.coffee$/i
 
 		currentFile = filename = path.join 'test', file
-		log red, "hi #{currentFile}"
+		console.log "-------------------"
+		console.log "Executing #{currentFile}"
 		code = fs.readFileSync filename
 		try
 			cs.CoffeeScript.run code.toString(), {filename}

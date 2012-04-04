@@ -8,7 +8,7 @@ define(['exports'], function(exports) {
 			return id;
 		}
 		
-		self.setAspect = function(name, obj) {
+		self.set = function(name, obj) {
 			if(!aspects[name] || aspects.hasOwnProperty(name)) {
 				aspects[name] = obj;
 				obj.callIfPresent('hasBeenAttachedToItem', [self])
@@ -23,6 +23,10 @@ define(['exports'], function(exports) {
 			}
 		}
 		
+		self.get = function(name) {
+			return aspects[name];
+		}
+		
 		self.removeAspect = function(name) {
 			var obj;
 			if(aspects.hasOwnProperty(name)) {
@@ -31,10 +35,6 @@ define(['exports'], function(exports) {
 				delete aspects[name];
 				obj.callIfPresent('hasBeenRemovedFromItem');
 			}
-		}
-		
-		self.get = function(name) {
-			return aspects[name];
 		}
 		
 		//calls func(aspect) for each aspect of the item

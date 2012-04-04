@@ -14,50 +14,50 @@
 			"aos/game", 
 			"aos/services/display", 
 			"aos/services/time",
-			"aos/services/world"], 
-		function(aos, display, time, world) {
+			"aos/services/world",
+			"aos/convenience/display",], 
+		function(aos, display, time, world, displayUtils) {
 			var game;
 			
 			game = aos.createGame();
 			
-			//create a display from canvas 1
-			game.register('display1', display.createDisplay(
-				document.getElementById('canvas1')
-			));
-			
-			var item = {x:0, y:0};
-			game.get('display1').setFocusItem(item);
-			//set a test renderer to see if anything happens
-			game.get('display1')
-				.setRenderer(display.createDummyRenderer());
-			
 			//create a time service
 			game.register('timer', time.createTimer());
-			//register the display's paint method as a tick receiver
-			game.get('timer').registerTickCallback(game.get('display1').paint);
-			game.get('timer').registerTickCallback(function(gametime) {
-					item.x = (item.x + 1)%97;
-			});
-			game.get('timer').registerTickCallback(function(gametime) {
-					item.y = (item.y + 1)%97;
-			}, 80);
-			game.get('timer').start();
 			
+			//create a world
 			game.register('world', world.createWorld());
-			var item1 = game.get('world').createItem();
-			item1.setAspect('foo', 
-				{name:'bar', 
-				hasBeenAttachedToItem:function(item){alert("attached to item " + item);},
+			//and a dummy item for testing
+			var item = game.get('world').createItem();
+			item.set('position', {x:0, y:0});
+			
+			//create a display from canvas 1
+			game.register('display1', display.createDisplay('canvas1'));
+			game.get('display1').setCamera(
+				//just render a given room
+				displayUtils.createRoomCamera( 
+					item, 
+					//using GameJS sprites
+					displayUtils.createGameJSSpriteRenderer() 
+				)
+			);
+			game.get('timer').registerTickCallback(game.get('display1').paint);
+			
+			//for testing: move item in x and y on different speeds
+			game.get('timer').registerTickCallback(function(gametime) {
+					item.get('position').x = (item.get('position').x + 1)%97;
 			});
-			alert(item1.get('foo').name);
-			item1.removeAspect('foo');
-			alert(item1.get('foo'));
+			game.get('timer').registerTickCallback(function(gametime) {
+					item.get('position').y = (item.get('position').y + 1)%97;
+			}, 80);
+			
+			//start the game loop
+			game.get('timer').start();
 			
     	});
 	};
 	</script>
 </head>
 <body onload="start();">
-	<canvas id="canvas1"></canvas>
+	<canvas id="canvas1" width="500"></canvas>
 </body>
 </html>

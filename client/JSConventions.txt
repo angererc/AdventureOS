@@ -1,0 +1,49 @@
+The AdventureOS uses the following JavaScript conventions (inspired by "JavaScript, the good parts"):
+
+=== Module System
+
+AdventureOS uses RequireJS as the module system. RequireJS can be used in-browser but also later used for assembling one big JS file out of the whole AdventureOS for optimized loading.
+
+_define_ in general takes one or two parameters. The last parameter is usually a function definign the module closure. The first parameter can be a list of required module strings. 
+
+The file name and location defines the name of the module. So a foo/bar.js including a define() statement is available in another module by saying define(["foo/bar"], function(barMod) {
+	barMod = ...
+});
+
+=== Object System
+
+We want the "real" JavaScript experience. Therefore we do *not* intend to immitate classical OO features like classes and inheritance but—for better or worse—be as prototypical as possible.
+
+Crockford has some good arguments *against* _new_ and _prototype_. Especially, forgetting a _new_ is dangerous and fails often silently in weird ways.
+
+Therefore we go with his "Functional" approach to building objects and prototype chains (page 52). Advantages are proper isolation, a decent solution for "super" calls if needed, possibility to create _durable_ objects which cannot be tampered with by other code (such as user-provided scripts, which is a feature of the AdventureOS!), and so on. Read his chapter for details.
+
+The basic form is:
+
+var createXYZ = function (spec) {
+	var self, other private instance variables;
+
+	self = //a new object literal or Object.create() or a call to some parent constructor
+	
+	//init private instance variables
+	
+	//add privileged methods to that
+	
+	return self;
+};
+
+A constructor is marked by convention by adding "create" to its name.
+
+Avoid using "this" in functions; instead use variables captured in closures. This way, user scripts can do no harm by accidentially or maliciously overriding slots and you know better what's happening (since 'this' can be bound to different things, depending on how a function is called: as a method, as a function, with new, or with apply())
+
+One can also add a "my" object and pass that around in the constructors of the inheritance chain if the constructors need to share some "secret" info.
+
+Use var myObject = Object.create(someProtoObject) to set up the prototype chain
+
+=== Variable declarations
+
+*JavaScript is not block-scoped but function-scoped!* This means, for example, that a _var_ inside an _for_ is visible outside the for! Therefore, it is good practice to declare vars in the beginning of the function, to make it clear that all "i"'s in multiple for loops are all the same i really.
+
+=== Overall Architecture
+
+Overall, the AdventureEngine is a ServiceOrientedArchitecture with a central _game_ object functioning as the service registry and lookup facility.

@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta charset="UTF-8" /> 
+		<title>AdventureOS Test Suite</title> 
+		<link rel="stylesheet" href="../../lib/qunit/qunit.css" type="text/css">
+		<script type="text/javascript" src="../../lib/qunit/qunit.js"></script>
+		<script src="../../lib/require.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			QUnit.config.autostart = false;
+			require([
+            		"simpleTests",
+          	],
+          	function () { QUnit.start(); }
+			);
+ 		</script> 
+		
+		<h1 id="qunit-header">AdventureOS Test Suite</h1> 
+		<h2 id="qunit-banner"></h2> 
+		<div id="qunit-testrunner-toolbar"></div> 
+		<h2 id="qunit-userAgent"></h2> 
+		<ol id="qunit-tests"></ol> 
+		<div id="qunit-fixture"></div> 
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head>
+	<meta http-equiv="cache-control" content="no-cache">
+	<script src="../../lib/require.js"></script>
+	<script>
+	//set the correct path for the adventure engine sources
+	require.config({
+    	paths: {
+        	"aos": "../../aos"
+    	}
+  	});
+	function start() {
+    	require([
+			"aos/game", 
+			"aos/services/display", 
+			"aos/services/time"], 
+		function(aos, display, time) {
+			var game;
+			
+			game = aos.createGame();
+			
+			//create a display from canvas 1
+			game.register('display1', display.createDisplay(
+				document.getElementById('canvas1')
+			));
+			
+			var item = {x:0, y:0};
+			game.get('display1').setFocusItem(item);
+			//set a test renderer to see if anything happens
+			game.get('display1')
+				.setRenderer(display.createDummyRenderer());
+			
+			//create a time service
+			game.register('timer', time.createTimer());
+			//register the display's paint method as a tick receiver
+			game.get('timer').addTickCallback(game.get('display1').paint);
+			game.get('timer').addTickCallback(function(gametime) {
+					item.x = (item.x + 1)%97;
+			}, 10);
+			game.get('timer').addTickCallback(function(gametime) {
+					item.y = (item.y + 1)%97;
+			}, 80);
+			game.get('timer').start();
+    	});
+	};
+	</script>
+</head>
+<body onload="start();">
+	<canvas id="canvas1"></canvas>
+</body>
+</html>

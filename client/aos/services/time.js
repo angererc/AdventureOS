@@ -6,7 +6,7 @@ define([], function() {
 	*/
 
 	/*spec properties: 
-		minInterval, maxStep
+		timerInterval, maxStep
 	*/
 	var createTimer = function(spec) {
 		spec = spec || {};
@@ -16,7 +16,7 @@ define([], function() {
 		var maxStep = spec.maxStep || 100;
 		var gameTime = 0;		
 		var lastTick = Date.now();
-		var minInterval = spec.minInterval || 10;
+		var timerInterval = spec.timerInterval || 10;
 		
 		//a map from time intervals to objects of the form
 		// { lastCall:<game time>, callbacks:<list of callback functions>}
@@ -47,7 +47,7 @@ define([], function() {
 
 		self.start = function() {
 			if(intervalID) { self.stop(); }
-			intervalID = window.setInterval(tick, minInterval);
+			intervalID = window.setInterval(tick, timerInterval);
 		}
 		
 		self.stop = function() {
@@ -55,8 +55,17 @@ define([], function() {
 			intervalID = undefined;
 		}
 		
-		self.addTickCallback = function(callback, interval) {
-			interval = interval || minInterval;
+		/*
+		add a callback function called every <interval> milliseconds.
+		The interval is measured in gameTime, not in wall time!
+		you are encouraged to register different callbacks for different
+		intervals to reduce load. e.g. update the view every 10 ms but
+		the updating AI or event handling only every 50 ms.
+		If no interval is given we use 0; this means that the callback
+		will be called every tick.
+		*/ 
+		self.registerTickCallback = function(callback, interval) {
+			interval = interval || 0;
 			var regInfo = registry[interval];
 			if(! regInfo) {
 				regInfo = {
@@ -68,7 +77,7 @@ define([], function() {
 			regInfo.callbacks.push(callback);
 		}
 		
-		self.removeTickCallback = function(callback, interval) {
+		self.deregisterTickCallback = function(callback, interval) {
 			var regInfo = registry[interval];
 			if(!regInfo) { return; }
 			

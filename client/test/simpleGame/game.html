@@ -33,11 +33,11 @@
 			//create a time service
 			game.register('timer', time.createTimer());
 			//register the display's paint method as a tick receiver
-			game.get('timer').addTickCallback(game.get('display1').paint);
-			game.get('timer').addTickCallback(function(gametime) {
+			game.get('timer').registerTickCallback(game.get('display1').paint);
+			game.get('timer').registerTickCallback(function(gametime) {
 					item.x = (item.x + 1)%97;
-			}, 10);
-			game.get('timer').addTickCallback(function(gametime) {
+			});
+			game.get('timer').registerTickCallback(function(gametime) {
 					item.y = (item.y + 1)%97;
 			}, 80);
 			game.get('timer').start();

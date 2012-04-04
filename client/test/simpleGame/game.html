@@ -13,8 +13,9 @@
     	require([
 			"aos/game", 
 			"aos/services/display", 
-			"aos/services/time"], 
-		function(aos, display, time) {
+			"aos/services/time",
+			"aos/services/world"], 
+		function(aos, display, time, world) {
 			var game;
 			
 			game = aos.createGame();
@@ -41,6 +42,17 @@
 					item.y = (item.y + 1)%97;
 			}, 80);
 			game.get('timer').start();
+			
+			game.register('world', world.createWorld());
+			var item1 = game.get('world').createItem();
+			item1.setAspect('foo', 
+				{name:'bar', 
+				hasBeenAttachedToItem:function(item){alert("attached to item " + item);},
+			});
+			alert(item1.get('foo').name);
+			item1.removeAspect('foo');
+			alert(item1.get('foo'));
+			
     	});
 	};
 	</script>

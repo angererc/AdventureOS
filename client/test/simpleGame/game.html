@@ -1,8 +1,15 @@
 <html>
 <head>
 	<meta http-equiv="cache-control" content="no-cache">
+	<!-- set the viewport to the device width, e.g. on an iPhone -->
+	<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=2.0">
+	<!-- set an iPhone specific page icon -->
+	<rel="apple-touch-icon" href="images/template/engage.png"/>
 	<script src="../../lib/require.js"></script>
 	<script>
+	//hide iphone toolbar
+	window.addEventListener('load', function() {
+		setTimeout(scrollTo, 0, 0, 1);}, false);
 	//set the correct path for the adventure engine sources
 	require.config({
     	paths: {
@@ -32,22 +39,24 @@
 			
 			//create a display from canvas 1
 			game.register('display1', display.createDisplay('canvas1'));
-			game.get('display1').setCamera(
+			var display = game.get('display1');
+			display.setCamera(
 				//just render a given room
 				displayUtils.createRoomCamera( 
+					display,
 					item, 
 					//using GameJS sprites
-					displayUtils.createGameJSSpriteRenderer() 
+					displayUtils.createSpriteRenderer(display) 
 				)
 			);
 			game.get('timer').registerTickCallback(game.get('display1').paint);
 			
 			//for testing: move item in x and y on different speeds
 			game.get('timer').registerTickCallback(function(gametime) {
-					item.get('position').x = (item.get('position').x + 1)%97;
+					item.get('position').x = (item.get('position').x + Math.sin(gametime/1000))%320;
 			});
 			game.get('timer').registerTickCallback(function(gametime) {
-					item.get('position').y = (item.get('position').y + 1)%97;
+					item.get('position').y = (item.get('position').y + Math.sin(gametime/100)*20)%320;
 			}, 80);
 			
 			//start the game loop

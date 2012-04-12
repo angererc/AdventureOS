@@ -1,4 +1,4 @@
-define(['exports'], function(exports) {
+define([], function() {
 	var module = {};
 	module.__INTERNAL__createItem = function(id) {
 		var self = {};

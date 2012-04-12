@@ -10,7 +10,7 @@ QUnit.extend( QUnit, {
 	 * @param Number maxDifference (the maximum inclusive difference allowed between the actual and expected numbers)
 	 * @param String message (optional)
 	 */
-	close: function(actual, expected, maxDifference, message) {
+	isClose: function(actual, expected, maxDifference, message) {
 		var passes = (actual === expected) || Math.abs(actual - expected) <= maxDifference;
 		QUnit.push(passes, actual, expected, message);
 	},
@@ -30,10 +30,4 @@ QUnit.extend( QUnit, {
 		QUnit.push(Math.abs(actual - expected) > minDifference, actual, expected, message);
 	},
 
-   vectorsClose: function(actual, expected, maxDifference, message) {
-      var passes = actual.every(function(item, idx) {
-         return (item === expected[idx]) || Math.abs(item - expected[idx]) <= maxDifference[idx];
-      });
-      QUnit.push(passes, actual, expected, message);
-   }
 });

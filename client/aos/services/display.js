@@ -37,8 +37,8 @@ define([], function() {
 			return {
 				x: 0,
 				y: 0,
-				width: cv.width,
-				height: cv.height,
+				width: cv.clientWidth,
+				height: cv.clientHeight,
 			}
 		}
 		

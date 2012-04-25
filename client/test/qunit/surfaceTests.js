@@ -58,50 +58,50 @@ define(
 	});
 
 	test('SurfaceBlit', function() {
-	   var surfaceEqual = QUnit.surfaceEqual;
-	   var pixelEqual = QUnit.pixelEqual;
+		var surfaceEqual = QUnit.surfaceEqual;
+		var pixelEqual = QUnit.pixelEqual;
 
-	   var big = Surface.create(Size.create(100,100));
-	   big.fill('rgb(255,0,0)');
+		var big = Surface.create(Size.create(100,100));
+		big.fill('rgb(255,0,0)');
 
-	   var second = Surface.create(Size.create(10,10));
-	   second.fill('rgb(0,255,0)');
+		var second = Surface.create(Size.create(10,10));
+		second.fill('rgb(0,255,0)');
 
-	   // blitting without target puts it into top left corner
-	   big.blit(second);
-	   pixelEqual(big, Point.create(0,0), [0,255,0]);
-	   pixelEqual(big, Point.create(9,9), [0,255,0]);
-	   pixelEqual(big, Point.create(10,10), [255,0,0]);
-	   pixelEqual(big, Point.create(99,99), [255,0,0]);
+		// blitting without target puts it into top left corner
+		big.blit(second);
+		pixelEqual(big, Point.create(0,0), [0,255,0]);
+		pixelEqual(big, Point.create(9,9), [0,255,0]);
+		pixelEqual(big, Point.create(10,10), [255,0,0]);
+		pixelEqual(big, Point.create(99,99), [255,0,0]);
 
-	   // blitting with whole big rect effectively fills
-	   big.fill('rgb(255,0,0)');
-	   big.blit(second, Rect.create(Point.create(0,0), big.size));
-	   pixelEqual(big, Point.create(0,0), [0,255,0]);
-	   pixelEqual(big, Point.create(9,9), [0,255,0]);
-	   pixelEqual(big, Point.create(10,10), [0,255,0]);
-	   pixelEqual(big, Point.create(99,99), [0,255,0]);
+		// blitting with whole big rect effectively fills
+		big.fill('rgb(255,0,0)');
+		big.blit(second, Rect.create(Point.create(0,0), big.size));
+		pixelEqual(big, Point.create(0,0), [0,255,0]);
+		pixelEqual(big, Point.create(9,9), [0,255,0]);
+		pixelEqual(big, Point.create(10,10), [0,255,0]);
+		pixelEqual(big, Point.create(99,99), [0,255,0]);
 
-	   // blitting at position
-	   big.fill('rgb(255,0,0)');
-	   big.blit(second,  Rect.create(Point.create(20,20), big.size));
-	   pixelEqual(big, Point.create(0,0), [255,0,0]);
-	   pixelEqual(big, Point.create(19,19), [255,0,0]);
-//	   pixelEqual(big, Point.create(20,20), [0,255,0]);
-//	   pixelEqual(big, Point.create(29,29), [0,255,0]);
-//	   pixelEqual(big, Point.create(30,30), [255,0,0]);
+		// blitting at position
+		big.fill('rgb(255,0,0)');
+		big.blit(second,  Rect.create(Point.create(20,20), second.size));
+		pixelEqual(big, Point.create(0,0), [255,0,0]);
+		/*test nr 10*/pixelEqual(big, Point.create(19,19), [255,0,0]);
+		pixelEqual(big, Point.create(20,20), [0,255,0]);
+		pixelEqual(big, Point.create(29,29), [0,255,0]);
+		pixelEqual(big, Point.create(30,30), [255,0,0]);
 
-	   // blitting at position with smaller source area
-	   big.fill('rgb(255,0,0)');
-	   big.blit(second, 
-					Rect.create(Point.create(20,20), big.size), 
-					Rect.create(Point.create(0,0),Size.create(5,5)));
-//	   pixelEqual(big, Point.create(0,0), [255,0,0]);
-//	   pixelEqual(big, Point.create(19,19), [255,0,0]);
-//	   pixelEqual(big, Point.create(20,20), [0,255,0]);
-//	   pixelEqual(big, Point.create(24,24), [0,255,0]);
-//	   pixelEqual(big, Point.create(25,25), [0,255,0]);
-//	   pixelEqual(big, Point.create(26,26), [0,255,0]);
-//	   pixelEqual(big, Point.create(30,30), [255,0,0]);
+		// blitting at position with smaller source area
+		big.fill('rgb(255,0,0)');
+		big.blit(second, 
+		 			Rect.create(Point.create(20,20), second.size), 
+		 			Rect.create(Point.create(0,0),Size.create(5,5)));
+		pixelEqual(big, Point.create(0,0), [255,0,0]);
+		/*test nr 15*/pixelEqual(big, Point.create(19,19), [255,0,0]);
+		pixelEqual(big, Point.create(20,20), [0,255,0]);
+		pixelEqual(big, Point.create(24,24), [0,255,0]);
+		pixelEqual(big, Point.create(25,25), [0,255,0]);
+		pixelEqual(big, Point.create(26,26), [0,255,0]);
+		pixelEqual(big, Point.create(30,30), [255,0,0]);
 	});
 });

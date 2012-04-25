@@ -210,8 +210,10 @@ define([
 		   	context.drawImage(
 				srcSurface.canvas, 
 				srcRect.left, srcRect.top, srcRect.width, srcRect.height, 
-				destRect.left, destRect.top, destRect.width, destRect.height);
-		   
+				0 /*shouldn't it be: destRect.left? Maybe not because we do matrix translation before*/, 
+				0 /*shouldn't it be: destRect.top?*/, 
+				destRect.width, destRect.height);
+		
 		   context.restore();
 		   return;
 		};

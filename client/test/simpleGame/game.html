@@ -20,33 +20,33 @@
     	require([
 			"aos/game", 
 			"aos/services/display", 
-			"aos/services/time",
+			"aos/services/timer",
 			"aos/services/world",
 			"aos/convenience/display",], 
-		function(aos, display, time, world, displayUtils) {
+		function(Game, Display, Timer, World, DisplayUtils) {
 			var game;
 			
-			game = aos.createGame();
+			game = Game.create();
 			
 			//create a time service
-			game.register('timer', time.createTimer());
+			game.register('timer', Timer.create());
 			
 			//create a world
-			game.register('world', world.createWorld());
+			game.register('world', World.create());
 			//and a dummy item for testing
-			var item = game.get('world').createItem();
+			var item = game.get('world').Item.create();
 			item.set('position', {x:0, y:0});
 			
 			//create a display from canvas 1
-			game.register('display1', display.createDisplay('canvas1'));
+			game.register('display1', Display.create('canvas1'));
 			var display = game.get('display1');
 			display.setCamera(
 				//just render a given room
-				displayUtils.createRoomCamera( 
+				DisplayUtils.createRoomCamera( 
 					display,
 					item, 
 					//using GameJS sprites
-					displayUtils.createSpriteRenderer(display) 
+					DisplayUtils.createSpriteRenderer(display) 
 				)
 			);
 			game.get('timer').registerTickCallback(game.get('display1').paint);

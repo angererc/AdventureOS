@@ -1,5 +1,5 @@
 define(['aos/additions/object', 'aos/additions/array'], function() {	
-	var createGame = function() {
+	var create = function() {
 		var self = {};
 		var registry = {};
 	
@@ -30,6 +30,6 @@ define(['aos/additions/object', 'aos/additions/array'], function() {
 	
 	//export module API
 	return {
-		createGame: createGame,
+		create: create,
 	}
 });

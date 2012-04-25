@@ -2,15 +2,15 @@ define([
 	'aos/graphics/point',
 	'aos/graphics/size',
 	'aos/additions/object', 
-], function(point, size) {
+], function(Point, Size) {
 	
 	//we keep an explicit point and size object
 	//but the Rect interface makes it easy to change that in the
 	//future, in case performance needs that
 	//(i.e., keep everything in the rect object)
 	var Rect = function(point, size) {
-		this.origin = point;
-		this.size = size;
+		this.origin = point.clone();
+		this.size = size.clone();
 	};
 	
 	Rect.prototype.isRect = true;
@@ -44,7 +44,7 @@ define([
 		function(val) { this.origin.y = val - this.size.height; });
 	
 	Rect.prototype.createAccessor('center',
-		function() { return point.createPoint(
+		function() { return Point.create(
 								this.origin.x + this.size.width/2,
 								this.origin.y + this.size.height/2); },
 		function(centerPoint) { 
@@ -75,7 +75,7 @@ define([
 	   y = Math.min(this.top, rect.top);
 	   width = Math.max(this.right, rect.right) - x;
 	   height = Math.max(this.bottom, rect.bottom) - y;
-	   return new Rect(point.createPoint(x, y), size.createSize(width, height));
+	   return new Rect(Point.create(x, y), Size.create(width, height));
 	};
 	
 	Rect.prototype.collidePoint = function(point) {
@@ -90,7 +90,7 @@ define([
 	
 	Rect.prototype.clip = function(rect) {
 	   if(!this.collideRect(rect)) {
-	      return new Rect(point.createPoint(0,0),size.createSize(0,0));
+	      return new Rect(Point.create(0,0),Size.create(0,0));
 	   }
 
 	   var x, y, width, height;
@@ -122,7 +122,7 @@ define([
 	   } else if ((rect.bottom > this.top) && (rect.bottom <= this.bottom)) {
 	     height = rect.bottom - y;
 	   }
-	   return new Rect(point.createPoint(x, y), size.createSize(width, height));
+	   return new Rect(Point.create(x, y), Size.create(width, height));
 	};
 	
 	Rect.prototype.collideLine = function(startPoint, endPoint) {
@@ -172,7 +172,7 @@ define([
 	
 	var module = {};
 
-	module.createRect = function(point, size) {
+	module.create = function(point, size) {
 		return new Rect(point, size);
 	};
 	

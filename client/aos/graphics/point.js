@@ -90,7 +90,7 @@ define(['aos/additions/object', 'aos/graphics/math'], function(obj, math) {
 	//for efficiency reasons (there are a lot of points created all
 	//the time and we don't want to create single objects with
 	//single functions every time)
-	module.createPoint = function(x, y) {
+	module.create = function(x, y) {
 		return new Point(x, y);
 	}
 	

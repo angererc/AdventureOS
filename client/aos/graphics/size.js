@@ -19,7 +19,7 @@ define([], function() {
 	
 	var module = {};
 	
-	module.createSize = function(width, height) {
+	module.create = function(width, height) {
 		return new Size(width, height);
 	}
 	

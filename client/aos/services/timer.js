@@ -8,7 +8,7 @@ define([], function() {
 	/*spec properties: 
 		timerInterval, maxStep
 	*/
-	var createTimer = function(spec) {
+	var create = function(spec) {
 		spec = spec || {};
 		var self = {};
 		
@@ -91,6 +91,6 @@ define([], function() {
 	};
 	
 	return {
-		createTimer: createTimer,
+		create: create,
 	};
 });

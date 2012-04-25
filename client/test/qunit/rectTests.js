@@ -1,10 +1,10 @@
 define(
 	['aos/graphics/rect', 'aos/graphics/point', 'aos/graphics/size'], 
-	function (rect, point, size) {
+	function (Rect, Point, Size) {
 
-	var PT = point.createPoint;
-	var SZ = size.createSize;
-	var REC = rect.createRect;
+	var PT = Point.create;
+	var SZ = Size.create;
+	var REC = Rect.create;
 	
 	test('isRect', function(){
 		expect(2);
@@ -12,7 +12,7 @@ define(
 		var s = SZ(2, 3);
 		var r = REC(p, s);
 	    ok(r.isRect);
-		equal(r.origin, p);
+		deepEqual(r.origin, p);
 	});
 	
 	test('toString', function(){
@@ -59,17 +59,16 @@ define(
 		equal(r.center.x, 1+2);
 		equal(r.center.y, 2+3);
 		
+		var r2 = r.moveBy(PT(-5,-5));
+		deepEqual(r.origin, p); //original rect unchanged
+		deepEqual(r.size, s);
+		equal(r2.left, 1-5);
+		equal(r2.top, 2-5);
+		
 		r.center = PT(10,10);
 		equal(r.left, 10-2);
 		equal(r.top, 10-3);
-		equal(r.size, s); //size unchanged
-
-		var r2 = r.moveBy(PT(-5,-5));
-		equal(r.origin, p); //original rect unchanged
-		equal(r.size, s);
-		equal(r2.left, 5-2);
-		equal(r2.top, 5-3);
-		
+		deepEqual(r.size, s); //size unchanged
 	});
 	
 	test('RectCollide', function() {

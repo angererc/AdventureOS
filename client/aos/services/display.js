@@ -1,5 +1,10 @@
-define([], function() {
-	var createDisplay = function(canvasID) {
+define([
+	'aos/graphics/point',
+	'aos/graphics/size',
+	'aos/graphics/rect',
+	'aos/graphics/surface',
+	], function(Point, Size, Rect, Surface) {
+	var create = function(canvasID) {
 		var self = {};
 		
 		//camera is a function of the form function(gameTime, display)
@@ -19,27 +24,21 @@ define([], function() {
 		//use the coordinates and simple shapes such as circles or something.
 		//you can write your own camera functions but there are some useful
 		//ones in the aos/convenience/display module
-		var camera, canvas;
+		var camera, canvas, surface;
 		
 		self.getCanvas = function() {
 			if(!canvas) {
 				canvas = document.getElementById(canvasID);
+				context = canvas.getContext('2d');
 			}
 			return canvas;
 		}
 		
-		self.getContext2D = function() {
-			return self.getCanvas().getContext('2d');
-		}
-		
-		self.getFrame = function() {
-			var cv = self.getCanvas();
-			return {
-				x: 0,
-				y: 0,
-				width: cv.clientWidth,
-				height: cv.clientHeight,
+		self.getSurface = function() {
+			if(!surface) {
+				surface = Surface.create(self.getCanvas());
 			}
+			return surface;
 		}
 		
 		self.setCamera = function(aCamera) {
@@ -56,6 +55,6 @@ define([], function() {
 	};
 	
 	return {
-		createDisplay: createDisplay,
+		create: create,
 	};
 });

@@ -52,9 +52,9 @@ define([], function() {
 		return this.multiply([svec.x, 0, 0, svec.y, 0, 0]);
 	};
 	
-	module.createIdentity = function() {
-		return new Matrix(1,0,0,1,0,0);
-	}
-	
-	return module;
+	return {
+		createIdentity: function() {
+			return new Matrix(1,0,0,1,0,0);
+		},
+	};
 });

@@ -1,8 +1,8 @@
 define(
-	['aos/graphics/point'], function (point) {
+	['aos/graphics/point'], function (Point) {
 		
 	var pt = function(x, y) {
-		return point.createPoint(x, y);
+		return Point.create(x, y);
 	};
 	
 	var EPS = 0.000001;

@@ -1,7 +1,7 @@
-define(['aos/items/item'], function(item) {
+define(['aos/items/item'], function(Item) {
 	var module = {};
 	
-	module.createWorld = function() {
+	module.create = function() {
 		var self = {};
 		/*
 		the world service keeps track of all items. Later, the world
@@ -11,8 +11,9 @@ define(['aos/items/item'], function(item) {
 		in case we have to augment the items with persistence etc.
 		functionality later.
 		*/
-		
-		self.createItem = item.__INTERNAL__createItem;
+		self.Item = {
+			create: Item.__INTERNAL__createItem,
+		};
 		
 		return self;
 	}

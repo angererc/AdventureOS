@@ -81,7 +81,7 @@ define(['aos/additions/object', 'aos/graphics/math'], function(obj, math) {
 	
 	Point.prototype.toString = function() {
 		return this.x + "@" + this.y;
-	}
+	};
 	
 	var module = {};
 	
@@ -92,7 +92,10 @@ define(['aos/additions/object', 'aos/graphics/math'], function(obj, math) {
 	//single functions every time)
 	module.create = function(x, y) {
 		return new Point(x, y);
-	}
+	};
 	
+	module.fromJson = function(obj) {
+		return new Point(obj.x, obj.y);
+	}
 	return module;
 });

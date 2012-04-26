@@ -179,12 +179,14 @@ define([
 		 */
 		self.blit = function(srcSurface, destRect, srcRect, translationMatrix, compositeOperation) {
 
-			if(! destRect) {
-		   		destRect = Rect.create(Point.create(0,0), srcSurface.size);
-			}
-			
 			if(! srcRect) {
 				srcRect = Rect.create(Point.create(0,0), srcSurface.size);
+			}
+			
+			if(! destRect) {
+				//if no destination rect is given, draw on 0,0 and with the original
+				//size
+		   		destRect = Rect.create(Point.create(0,0), srcRect.size);
 			}
 			
 		   	compositeOperation = compositeOperation || 'source-over';
@@ -212,7 +214,8 @@ define([
 				srcRect.left, srcRect.top, srcRect.width, srcRect.height, 
 				0 /*shouldn't it be: destRect.left? Maybe not because we do matrix translation before*/, 
 				0 /*shouldn't it be: destRect.top?*/, 
-				destRect.width, destRect.height);
+				destRect.width, 
+				destRect.height);
 		
 		   context.restore();
 		   return;

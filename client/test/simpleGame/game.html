@@ -23,9 +23,15 @@
 			"aos/services/timer",
 			"aos/services/world",
 			"aos/services/pictureBook",
+			"aos/graphics/spriteSheet",
 			"aos/convenience/display",
+			"aos/convenience/spriteSheet",
 			], 
-		function(Game, Display, Timer, World, PictureBook, DisplayUtils) {
+		function(
+					Game, 
+					Display, Timer, World, PictureBook, 
+					SpriteSheet, 
+					DisplayUtils, SpriteSheetUtils) {
 			var game;
 			
 			game = Game.create();
@@ -56,8 +62,10 @@
 			
 			function startGame() {
 				var pic = pictureBook.get('GoodwinWalkingWithGlasses.png');				
+				var sheet = SpriteSheet.create(
+								pic, SpriteSheetUtils.regularGridSpec(pic, 4));
 				display.surface.fill("#FFFF00");
-				display.surface.blit(pic);
+				display.surface.blit(sheet.get(3));
 					
 				//start the game loop once everything is loaded
 				timer.start();

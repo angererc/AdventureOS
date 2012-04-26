@@ -15,13 +15,17 @@ define([], function() {
 	
 	Size.prototype.toString = function() {
 		return this.width + "x" + this.height;
-	}
+	};
 	
 	var module = {};
 	
 	module.create = function(width, height) {
 		return new Size(width, height);
-	}
+	};
+	
+	module.fromJson = function(obj) {
+		return new Size(obj.width, obj.height);
+	};
 	
 	return module;
 });

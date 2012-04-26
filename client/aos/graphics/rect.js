@@ -176,5 +176,9 @@ define([
 		return new Rect(point, size);
 	};
 	
+	module.fromJson = function(obj) {
+		return new Rect(Point.fromJson(obj), Size.fromJson(obj));
+	}
+	
 	return module;
 });

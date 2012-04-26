@@ -1,7 +1,7 @@
 define(['aos/additions/object'], function(obj) {
 	var module = {};
 	
-	var createSprite = function() {
+	module.create = function() {
 		var self = {};
 		
 		var groups = [];

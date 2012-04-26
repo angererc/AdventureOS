@@ -22,45 +22,46 @@
 			"aos/services/display", 
 			"aos/services/timer",
 			"aos/services/world",
-			"aos/convenience/display",], 
-		function(Game, Display, Timer, World, DisplayUtils) {
+			"aos/services/pictureBook",
+			"aos/convenience/display",
+			], 
+		function(Game, Display, Timer, World, PictureBook, DisplayUtils) {
 			var game;
 			
 			game = Game.create();
 			
 			//create a time service
-			game.register('timer', Timer.create());
+			var timer = game.register('timer', Timer.create());
 			
 			//create a world
-			game.register('world', World.create());
+			var world = game.register('world', World.create());
 			//and a dummy item for testing
-			var item = game.get('world').Item.create();
+			var item = world.Item.create();
 			item.set('position', {x:0, y:0});
 			
 			//create a display from canvas 1
-			game.register('display1', Display.create('canvas1'));
-			var display = game.get('display1');
-			display.setCamera(
-				//just render a given room
-				DisplayUtils.createRoomCamera( 
-					display,
-					item, 
-					//using GameJS sprites
-					DisplayUtils.createSpriteRenderer(display) 
-				)
-			);
-			game.get('timer').registerTickCallback(game.get('display1').paint);
+			var display = game.register('display1', Display.create('canvas1'));
+			display.camera = DisplayUtils.createRoomCamera( 
+								display,
+								item, 
+								//using GameJS sprites
+								DisplayUtils.createSpriteRenderer(display) 
+							);
+			timer.registerTickCallback(display.paint);
 			
-			//for testing: move item in x and y on different speeds
-			game.get('timer').registerTickCallback(function(gametime) {
-					item.get('position').x = (item.get('position').x + Math.sin(gametime/1000))%320;
-			});
-			game.get('timer').registerTickCallback(function(gametime) {
-					item.get('position').y = (item.get('position').y + Math.sin(gametime/100)*20)%320;
-			}, 80);
+			//create a picture book
+			var pictureBook = game.register('pictureBook', PictureBook.create());
 			
-			//start the game loop
-			game.get('timer').start();
+			pictureBook.load('GoodwinWalkingWithGlasses.png', startGame);
+			
+			function startGame() {
+				var pic = pictureBook.get('GoodwinWalkingWithGlasses.png');				
+				display.surface.fill("#FFFF00");
+				display.surface.blit(pic);
+					
+				//start the game loop once everything is loaded
+				timer.start();
+			}
 			
     	});
 	};

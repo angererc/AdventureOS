@@ -3,6 +3,7 @@ define([
 	'aos/graphics/size',
 	'aos/graphics/rect',
 	'aos/graphics/surface',
+	'aos/additions/object',
 	], function(Point, Size, Rect, Surface) {
 	var create = function(canvasID) {
 		var self = {};
@@ -26,24 +27,29 @@ define([
 		//ones in the aos/convenience/display module
 		var camera, canvas, surface;
 		
-		self.getCanvas = function() {
-			if(!canvas) {
-				canvas = document.getElementById(canvasID);
-				context = canvas.getContext('2d');
+		self.createAccessor('canvas', 
+			function() {
+				if(!canvas) {
+					canvas = document.getElementById(canvasID);
+					context = canvas.getContext('2d');
+				}
+				return canvas;
 			}
-			return canvas;
-		}
+		);
 		
-		self.getSurface = function() {
-			if(!surface) {
-				surface = Surface.create(self.getCanvas());
+		self.createAccessor('surface', 
+			function() {
+				if(!surface) {
+					surface = Surface.create(self.canvas);
+				}
+				return surface;
 			}
-			return surface;
-		}
+		);
 		
-		self.setCamera = function(aCamera) {
-			camera = aCamera;
-		}
+		self.createAccessor('camera',
+			function() { return camera; },
+			function(aCamera) { camera = aCamera; }
+		);
 		
 		self.paint = function(gameTime) {
 			if(camera) {

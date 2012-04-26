@@ -22,14 +22,14 @@ define(['aos/graphics/surface'], function(Surface) {
 	//A renderer that renders the item tree using the items'
 	//sprite aspects
 	module.createSpriteRenderer = function(display) {
-		var surface = display.getSurface();
+		var surface = display.surface;
 
 		//var s1 = new Sprite([200,200]);
 		//s1.image = gamejs.image.load("images/ship.png");
 		//var s2 = new Sprite([20,20]);
 		//s2.image = gamejs.image.load("images/ship.png");
 		return function(gameTime, rootItem, bounds) {
-			surface.fill("#FFFFFF");
+			//surface.fill("#FFFF00");
 			//s1.draw(surface);
 			//s2.draw(surface);
 		}

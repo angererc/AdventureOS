@@ -6,6 +6,7 @@ define(['aos/additions/object', 'aos/additions/array'], function() {
 		self.register = function(name, service) {
 			registry[name] = service;
 			service.callIfPresent('hasBeenAddedToGameWithName', [name]);
+			return service;
 		};
 		
 		self.get = function(name) {
@@ -23,6 +24,7 @@ define(['aos/additions/object', 'aos/additions/array'], function() {
 				delete this[name];
 				service.callIfPresent('hasBeenRemovedFromGame');
 			}
+			return service;
 		};
 		
 		return self;

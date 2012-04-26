@@ -5,8 +5,8 @@ define(['aos/additions/object'], function(obj) {
 	 * A sprite is essentially an animated sprite sheet
 	 * the animation spec is an object of the form 
 	 * {
-	     mode1: ['1x3','standing']
-	     mode2: [1, function(gameTime) {...}, 4, false]
+	     mode1: {speed:8, frames:['1x3','standing']}
+	     mode2: {speed:10, frames:[1, function(gameTime) {...}, 4, false]}
 	   }
 	 * that is, it maps a "mode" to a sequence of tiles in the
 	 * sprite sheet. In general, the animations cycle unless the
@@ -18,23 +18,24 @@ define(['aos/additions/object'], function(obj) {
 	 * piggy-back callbacks
 	 * at certain animation points
 	 */
-	module.create = function(spriteSheet, animationSpec, fps) {
+	module.create = function(spriteSheet, animationSpec) {
 		var self = {};
 		
-		var frameDuration = 1000 / (fps || 6);
+		var frameDuration = null;
 		
 		var currentImage;
 		
-		var currentMode = null;
+		var currentMode;
 		var currentAnimationSpec;
-		var currentFrame = 0;
-		var currentFrameDuration  = 0;
+		var currentFrame;
+		var currentFrameDuration;
 		
 		self.createAccessor('mode', 
 			function() {return currentMode;},
 			function(aMode) {
 				currentMode = aMode;
 				currentAnimationSpec = animationSpec[currentMode];
+				frameDuration = 1000 / (currentAnimationSpec.speed || 6);
 				currentFrame = 0;
 				currentFrameDuration  = 0;				
 			}
@@ -46,7 +47,7 @@ define(['aos/additions/object'], function(obj) {
 		
 		self.tick = function(gameTime, deltaTime) {
 			var setCurrentImage = function() {
-				var tileName = currentAnimationSpec[currentFrame];
+				var tileName = currentAnimationSpec.frames[currentFrame];
 				if(typeof tileName === 'function') {
 					tileName = tileName(gameTime, deltaTime);
 				}	
@@ -70,7 +71,7 @@ define(['aos/additions/object'], function(obj) {
 				//look ahead if last entry is false; then we do nothing
 				if(currentAnimationSpec[currentFrame + 1] !== false) {
 					//it's not false, so go ahead
-					currentFrame = (currentFrame + 1) % currentAnimationSpec.length;
+					currentFrame = (currentFrame + 1) % currentAnimationSpec.frames.length;
 					setCurrentImage();					
 				}
 				

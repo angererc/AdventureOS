@@ -24,13 +24,14 @@
 			"aos/services/world",
 			"aos/services/pictureBook",
 			"aos/graphics/spriteSheet",
+			"aos/graphics/sprite",
 			"aos/convenience/display",
 			"aos/convenience/spriteSheet",
 			], 
 		function(
 					Game, 
 					Display, Timer, World, PictureBook, 
-					SpriteSheet, 
+					SpriteSheet, Sprite,
 					DisplayUtils, SpriteSheetUtils) {
 			var game;
 			
@@ -41,6 +42,11 @@
 			
 			//create a world
 			var world = game.register('world', World.create());
+			
+			//create a picture book
+			var pictureBook = game.register('pictureBook', PictureBook.create());
+			pictureBook.load('GoodwinWalkingWithGlasses.png', startGame);
+			
 			//and a dummy item for testing
 			var item = world.Item.create();
 			item.set('position', {x:0, y:0});
@@ -55,18 +61,16 @@
 							);
 			timer.registerTickCallback(display.paint);
 			
-			//create a picture book
-			var pictureBook = game.register('pictureBook', PictureBook.create());
-			
-			pictureBook.load('GoodwinWalkingWithGlasses.png', startGame);
-			
 			function startGame() {
+				//set the sprite of the dummy item
 				var pic = pictureBook.get('GoodwinWalkingWithGlasses.png');				
 				var sheet = SpriteSheet.create(
 								pic, SpriteSheetUtils.regularGridSpec(pic, 4));
-				display.surface.fill("#FFFF00");
-				display.surface.blit(sheet.get(3));
-					
+				var sprite = Sprite.create(sheet, {'walk':[0,1,2,3]}, 8);
+				sprite.mode = 'walk';
+				
+				item.set('sprite', sprite);
+				
 				//start the game loop once everything is loaded
 				timer.start();
 			}

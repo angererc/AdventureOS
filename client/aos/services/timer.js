@@ -38,7 +38,7 @@ define([], function() {
 					if(interval <= timeSinceLastCall) {
 						regInfo.lastCall = gameTime;
 						regInfo.callbacks.forEach(
-							function(callback){callback(gameTime);}
+							function(callback){callback(gameTime, timeSinceLastCall);}
 						);
 					}
 				}

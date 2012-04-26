@@ -51,9 +51,9 @@ define([
 			function(aCamera) { camera = aCamera; }
 		);
 		
-		self.paint = function(gameTime) {
+		self.paint = function(gameTime, deltaTime) {
 			if(camera) {
-				camera(gameTime, self);
+				camera(gameTime, deltaTime, self);
 			}
 		};
 		

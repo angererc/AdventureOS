@@ -12,9 +12,10 @@ define(['aos/graphics/surface'], function(Surface) {
 	//A camera that simply renders the whole room. 
 	//Doesn't follow any item or anything
 	module.createRoomCamera = function(display, room, renderer) {
-		return function(gameTime) {
+		return function(gameTime, deltaTime) {
 			renderer(
 				gameTime, 
+				deltaTime,
 				room);
 		}
 	}
@@ -28,10 +29,11 @@ define(['aos/graphics/surface'], function(Surface) {
 		//s1.image = gamejs.image.load("images/ship.png");
 		//var s2 = new Sprite([20,20]);
 		//s2.image = gamejs.image.load("images/ship.png");
-		return function(gameTime, rootItem, bounds) {
-			//surface.fill("#FFFF00");
-			//s1.draw(surface);
-			//s2.draw(surface);
+		return function(gameTime, deltaTime, rootItem) {
+			surface.fill("#FFFF00");
+			var sprite = rootItem.get('sprite');
+			sprite.tick(gameTime, deltaTime);
+			sprite.draw(surface);
 		}
 	}
 	

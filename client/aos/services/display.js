@@ -18,8 +18,8 @@ define([
 		//the camera then may use an extra renderer
 		//that does the actual drawing by inspecting the item tree starting
 		//from the root item. Each renderer is associated with one or more
-		//item aspects that it uses to store information. e.g. the 
-		//spriteRenderer uses a sprite aspect that contains all the
+		//item roles that it uses to store information. e.g. the 
+		//spriteRenderer uses a sprite role that contains all the
 		//relevant info and it may store sprite objects in it.
 		//another renderer (e.g. a "radar screen renderer") may only
 		//use the coordinates and simple shapes such as circles or something.

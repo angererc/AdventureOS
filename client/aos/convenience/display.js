@@ -21,7 +21,7 @@ define(['aos/graphics/surface'], function(Surface) {
 	}
 	
 	//A renderer that renders the item tree using the items'
-	//sprite aspects
+	//sprite roles
 	module.createSpriteRenderer = function(display) {
 		var surface = display.surface;
 

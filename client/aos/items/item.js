@@ -2,48 +2,44 @@ define([], function() {
 	var module = {};
 	module.__INTERNAL__createItem = function(id) {
 		var self = {};
-		var aspects = {};
+		var roles = {};
 		
 		self.getID = function() {
 			return id;
 		}
 		
 		self.set = function(name, obj) {
-			if(!aspects[name] || aspects.hasOwnProperty(name)) {
-				aspects[name] = obj;
+			if(!roles[name] || roles.hasOwnProperty(name)) {
+				roles[name] = obj;
 				obj.callIfPresent('hasBeenAttachedToItem', [self])
 			} else {
-				throw {
-					name:'AspectException', 
-					message:
-						'aspect with name ' + name 
+				throw new Error('role with name ' + name 
 						+ ' would override parent property.' 
-						+ ' Choose a different name',
-				};
+						+ ' Choose a different name');
 			}
 		}
 		
 		self.get = function(name) {
-			return aspects[name];
+			return roles[name];
 		}
 		
-		self.removeAspect = function(name) {
+		self.removeRole = function(name) {
 			var obj;
-			if(aspects.hasOwnProperty(name)) {
-				obj = aspects[name];
+			if(roles.hasOwnProperty(name)) {
+				obj = roles[name];
 				obj.callIfPresent('willBeRemovedFromItem');
-				delete aspects[name];
+				delete roles[name];
 				obj.callIfPresent('hasBeenRemovedFromItem');
 			}
 		}
 		
-		//calls func(aspect) for each aspect of the item
+		//calls func(role) for each role of the item
 		//can be used in a timer, for example, to propagate tick events
-		self.eachAspect = function(func) {
+		self.eachRole = function(func) {
 			var name;
-			for(name in aspects) {
-				if(aspects.hasOwnProperty(name)) {
-					func(aspects[name]);
+			for(name in roles) {
+				if(roles.hasOwnProperty(name)) {
+					func(roles[name]);
 				}
 			}
 		}

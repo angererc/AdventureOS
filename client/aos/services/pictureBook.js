@@ -19,7 +19,7 @@ define([
 		var cache = {};
 		
 		self.load = function(imagePaths, readyCallback) {
-			if(!imagePaths.isArray) {
+			if(!imagePaths instanceof Array) {
 				imagePaths =[imagePaths];
 			}
 			var countLoaded = 0;

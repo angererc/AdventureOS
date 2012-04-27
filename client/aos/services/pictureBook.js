@@ -19,8 +19,8 @@ define([
 		var cache = {};
 		
 		self.load = function(imagePaths, readyCallback) {
-			if(!imagePaths instanceof Array) {
-				imagePaths =[imagePaths];
+			if(! (imagePaths instanceof Array)) {
+				imagePaths = [imagePaths];
 			}
 			var countLoaded = 0;
 			var countTotal = imagePaths.length;

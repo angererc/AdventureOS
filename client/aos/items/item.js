@@ -1,25 +1,39 @@
 define([], function() {
 	var module = {};
+	
+	
+	var reconstructRoles = function(roleConstructors, dependencies) {
+		var sorted = topologicalSort(dependencies);
+	};
+			
 	module.__INTERNAL__createItem = function(id) {
 		var self = {};
-		var roles = {};
+		//instantiated roles; if null we have to re-generate them because something has changed
+		var roles = null;
+		//uninstantiated roles.
+		var roleConstructors = {};
+		var dependencies = {};
 		
 		self.getID = function() {
 			return id;
 		}
 		
-		self.set = function(name, obj) {
-			if(!roles[name] || roles.hasOwnProperty(name)) {
-				roles[name] = obj;
-				obj.callIfPresent('hasBeenAttachedToItem', [self])
-			} else {
-				throw new Error('role with name ' + name 
-						+ ' would override parent property.' 
-						+ ' Choose a different name');
+		self.set = function(name, objOrFunction, dependenciesList) {
+			roleConstructors[name] = objOrFunction;
+			//make sure we have a depencencies list and it's a list, not a single role name
+			if(! dependenciesList) {
+				dependenciesList = [];
+			} else if(! dependenciesList.isArray) {
+				dependenciesList = [dependenciesList];
 			}
+			dependencies[name] = dependenciesList;
+			roles = null; //re-construct
 		}
 		
 		self.get = function(name) {
+			if(! roles) {
+				roles = reconstructRoles(roleConstructors, dependencies);
+			}
 			return roles[name];
 		}
 		
